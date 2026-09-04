@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR Screening Prep — Rushikesh Patil</title>
+<style>
+  :root{
+    --ink:#1c2b2d;
+    --paper:#f7f4ee;
+    --line:#d9d2c4;
+    --accent:#2f6f5e;
+    --accent-dim:#e4efe9;
+    --amber:#a9642c;
+    --amber-dim:#f3e6da;
+    --muted:#6b6459;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family: "Iowan Old Style","Georgia",serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0;}
+  header{
+    border-bottom:2px solid var(--ink);
+    padding:22px 28px 16px;
+    margin-bottom:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:16px;
+    flex-wrap:wrap;
+    background:var(--paper);
+    position:sticky;
+    top:0;
+    z-index:20;
+  }
+  .layout{
+    display:flex;
+    align-items:flex-start;
+  }
+  .navcol{
+    width:210px;
+    flex:0 0 210px;
+    position:sticky;
+    top:96px;
+    max-height:calc(100vh - 116px);
+    overflow-y:auto;
+    padding:20px 10px 40px 28px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .navcol a{
+    display:block;
+    font-size:12.5px;
+    color:var(--muted);
+    text-decoration:none;
+    padding:5px 8px;
+    border-radius:3px;
+    margin-bottom:2px;
+    border-left:2px solid transparent;
+  }
+  .navcol a:hover{color:var(--accent);background:var(--accent-dim);}
+  .maincol{
+    flex:1;
+    min-width:0;
+    padding:20px 28px 90px;
+    max-height:calc(100vh - 96px);
+    overflow-y:auto;
+  }
+  @media (max-width:820px){
+    .navcol{display:none;}
+    .maincol{max-height:none;overflow-y:visible;padding:16px 16px 90px;}
+    header{position:static;padding:18px 16px 14px;}
+  }
+  header h1{
+    font-size:28px;
+    margin:0 0 4px;
+    font-weight:600;
+    letter-spacing:.2px;
+  }
+  header p{margin:0;color:var(--muted);font-size:14.5px;font-family:"Helvetica Neue",Arial,sans-serif;}
+  .toolbar{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  button{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;
+    border:1px solid var(--ink);
+    background:var(--card);
+    color:var(--ink);
+    padding:7px 12px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  button:hover{background:var(--ink);color:var(--paper);}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+  button.primary:hover{background:#255a4b;}
+  .searchbar{
+    display:flex;
+    gap:8px;
+    margin-bottom:22px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .searchbar input{
+    flex:1;
+    padding:9px 12px;
+    border:1px solid var(--line);
+    border-radius:3px;
+    font-size:14px;
+    background:var(--card);
+  }
+  .cat{
+    margin-bottom:30px;
+  }
+  .cat-title{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:12.5px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--accent);
+    border-bottom:1px solid var(--line);
+    padding-bottom:6px;
+    margin-bottom:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .cat-title span.count{color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;}
+  .qa{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:14px 18px;
+    margin-bottom:12px;
+    position:relative;
+    display:grid;
+    grid-template-columns:minmax(180px,290px) 1fr;
+    gap:6px 22px;
+    align-items:start;
+  }
+  .qa .q{
+    font-weight:700;
+    font-size:15.5px;
+    outline:none;
+    border-bottom:1px dashed transparent;
+    border-right:1px solid var(--line);
+    padding-right:18px;
+    align-self:start;
+  }
+  .qa .a{
+    font-size:15px;
+    color:#2c3a3c;
+    outline:none;
+    white-space:pre-wrap;
+  }
+  @media (max-width:720px){
+    .qa{grid-template-columns:1fr;}
+    .qa .q{border-right:none;border-bottom:1px solid var(--line);padding-right:0;padding-bottom:6px;margin-bottom:4px;}
+  }
+  [contenteditable="true"]:hover{border-bottom-color:var(--line);}
+  [contenteditable="true"]:focus{
+    background:var(--accent-dim);
+    border-radius:3px;
+    padding:2px 4px;
+    margin:-2px -4px;
+  }
+  .qa .rowbtns{
+    position:absolute;
+    top:10px;
+    right:10px;
+    display:flex;
+    gap:6px;
+    opacity:0;
+    transition:opacity .12s;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .qa:hover .rowbtns{opacity:1;}
+  .rowbtns button{
+    padding:3px 8px;
+    font-size:11px;
+    border-radius:3px;
+  }
+  .addq{
+    background:transparent;
+    border:1px dashed var(--line);
+    color:var(--muted);
+    width:100%;
+    padding:9px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:13px;
+    border-radius:6px;
+  }
+  .addq:hover{background:var(--accent-dim);color:var(--accent);border-color:var(--accent);}
+  .tag{
+    display:inline-block;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:10.5px;
+    background:var(--amber-dim);
+    color:var(--amber);
+    border-radius:3px;
+    padding:1px 7px;
+    margin-bottom:8px;
+  }
+  .hidden{display:none !important;}
+  footer{
+    text-align:center;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    color:var(--muted);
+    font-size:12px;
+    margin-top:40px;
+  }
+  @media print{
+    header .toolbar, .searchbar, .rowbtns, .addq{display:none !important;}
+    body{background:#fff;}
+    .qa{break-inside:avoid;border-color:#ccc;}
+  }
+  @media (max-width:600px){
+    header{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>HR Screening — Quick Answers</h1>
+      <p>Rushikesh Patil · Java Full Stack Developer · 4+ yrs · Pune</p>
+    </div>
+    <div class="toolbar">
+      <button onclick="window.print()">Print / Save PDF</button>
+      <button class="primary" onclick="addCategory()">+ New Section</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="navcol" id="navcol"></nav>
+    <div class="maincol">
+      <div class="searchbar">
+        <input type="text" id="searchInput" placeholder="Type to filter questions (e.g. 'kafka', 'ctc', 'kubernetes')..." oninput="filterQA()">
+      </div>
+
+      <div id="sections"></div>
+
+      <footer>Everything here is editable — click any question or answer to change it. Use "+ New Section" or "+ Add question" to expand as new topics come up on the call.</footer>
+    </div>
+  </div>
+</div>
+
+<script>
+const data = [
+  {
+    title: "Opening",
+    items: [
+      { q: "Tell me about yourself.", a: "I'm Rushikesh Patil, a Java Full Stack Developer with 4+ years of experience building enterprise applications in banking, payment processing, and healthcare domains. I work primarily with Java, Spring Boot, Spring Data JPA, Hibernate, and microservices on the backend, and Angular/React.js on the frontend. I've contributed to 80+ REST APIs across projects — a digital banking platform, a payments messaging platform, and a healthcare EHR platform. I'm comfortable with Spring Security/JWT/OAuth2, Kafka/RabbitMQ for async processing, PostgreSQL/MySQL/Oracle/MongoDB, and Docker/Kubernetes deployments on AWS and Azure. Currently I'm at Codeworld Infotech, and before that at Baranwal Consultancy and Humanus Global." },
+      { q: "Walk me through your career progression / companies so far.", a: "I started at Humanus Global (Aug 2022–Dec 2023) as a Full Stack Developer working on core Java, Spring Boot, Angular, and REST APIs. Then I moved to Baranwal Consultancy (Dec 2023–Apr 2026) where I worked on 40+ APIs, microservices with Spring Cloud/Eureka/API Gateway, Kafka/RabbitMQ, and CI/CD with Docker/Kubernetes on AWS/Azure. I'm currently at Codeworld Infotech (May 2026–Present) continuing full-stack development with the same stack, focused on scalable business applications." },
+      { q: "Why are you looking for a change?", a: "My current role was hybrid based out of Pune, but the client now needs the team to be based in Bengaluru, which isn't feasible for me to relocate for. So I'm exploring roles that let me stay in Pune while also giving me more ownership over architecture decisions and exposure to larger-scale distributed systems — I want to keep growing in microservices and cloud-native development." }
+    ]
+  },
+  {
+    title: "Compensation & Logistics",
+    items: [
+      { q: "What is your current CTC?", a: "My current CTC is 7.8 LPA fixed." },
+      { q: "What is your expected CTC?", a: "My expectation is in the range of 10-15 LPA, depending on the role, responsibilities, and overall package — I'm open to discussing based on what's on offer." },
+      { q: "What is your notice period? Are you serving currently?", a: "I'm already serving my notice period — my last working day is September 14. So I can join fairly quickly after that." },
+      { q: "Current location and are you open to relocation / hybrid / remote?", a: "I'm based in Pune, Maharashtra. [Fill in — open to relocation / prefer remote / hybrid, etc.]" },
+      { q: "When can you join?", a: "My last working day at my current company is September 14, so I can join shortly after that." },
+      { q: "Do you have any other offers in hand?", a: "Yes, I have an offer in hand at 9.8 LPA fixed pay." }
+    ]
+  },
+  {
+    title: "Role & Responsibilities",
+    items: [
+      { q: "What are your day-to-day roles and responsibilities in your current role?", a: "I design and develop backend microservices using Java, Spring Boot, Spring Data JPA, and Hibernate — covering CRUD operations, validation, exception handling, and pagination. I build and consume REST APIs, implement security using Spring Security/JWT/OAuth2/RBAC, and integrate Kafka/RabbitMQ with Redis caching for async workflows. On the frontend I build components in Angular and React.js. I also work with Git/Maven/Jenkins/Docker for CI/CD, write unit tests with JUnit5/Mockito, and take part in Agile ceremonies, code reviews, and production support." },
+      { q: "Do you work independently or as part of a team? How large is your team?", a: "I work as part of an Agile/Scrum team of around 6-8 members, including developers, a QA, and a project lead. I take ownership of my modules independently — from design through delivery — while collaborating closely with the team on sprint planning, code reviews, defect resolution, and production support." },
+      { q: "Have you worked with any client-facing responsibilities?", a: "My interaction with clients has mainly been indirect, through requirement discussions and sprint reviews where the team walks through progress and gathers feedback. I've taken part in these calls to clarify requirements and confirm implementation details, though most day-to-day client communication has gone through my project lead/manager." }
+    ]
+  },
+  {
+    title: "Projects — Short Answers",
+    items: [
+      { q: "Explain the Backbase – Digital Banking Platform project.", a: "It's an enterprise digital banking platform for customer onboarding, account management, fund transfers, and transaction processing. I developed backend microservices using Java, Spring Boot, JPA, and Hibernate, built 25+ REST APIs with Spring Cloud (Eureka, Config Server, API Gateway, OpenFeign), implemented Spring Security/JWT/OAuth2/RBAC across 4+ roles, integrated Kafka for transaction events (15K+/day), used Redis caching to cut DB calls by 25%, and built Angular components with TypeScript/RxJS. It supported 10K+ transactions/day, deployed via Docker/Jenkins on AWS." },
+      { q: "Explain the SWIFT Alliance – Payments Messaging Platform project.", a: "An enterprise payments messaging platform for secure financial messaging and transaction tracking between banking systems. I built backend microservices for payment message processing and status tracking, supporting 20K+ payment messages/day. Developed 30+ REST APIs integrating internal/external systems via Spring Cloud/API Gateway/OpenFeign, used Kafka and RabbitMQ for async workflows (25K+ events/day), applied Resilience4j for retry/circuit-breaker patterns, and containerized services with Docker/Kubernetes, deployed via Jenkins CI/CD on AWS with 99%+ availability." },
+      { q: "Explain the NextGen Healthcare – EHR Platform project.", a: "An Electronic Health Record platform for patient management, appointment scheduling, clinical documentation, and provider workflows, supporting 5K+ patient records. I built backend microservices with Spring Boot/JPA/Hibernate, developed 20+ REST APIs for secure exchange of patient and clinical data, implemented Spring Security/JWT/RBAC across 5+ roles, built responsive dashboards in Angular and React.js (15+ reusable components), used MySQL and MongoDB for transactional and document data, integrated Kafka for async notifications, and achieved 80%+ test coverage with JUnit5/Mockito." },
+      { q: "Which project are you most proud of and why?", a: "[Pick the one most relevant to the interviewer's company — e.g. banking → Backbase, payments → SWIFT Alliance, healthcare → NextGen. Mention the scale (10K+/20K+ transactions) and a concrete performance improvement, like the 30% query performance gain.]" }
+    ]
+  },
+  {
+    title: "AWS",
+    items: [
+      { q: "What AWS services have you worked with?", a: "EC2 for compute/hosting, S3 for storage, RDS for managed relational databases, and IAM for access management — used for deploying and managing microservices, database hosting, and CI/CD deployment pipelines with Jenkins." },
+      { q: "How did you use AWS in your CI/CD pipeline?", a: "Jenkins/GitHub Actions build and containerize the application with Docker, push images, and deploy to AWS (EC2/ECS-style setups), cutting deployment effort by around 30% in one project." },
+      { q: "How do you secure resources on AWS?", a: "Using IAM roles and policies for least-privilege access, security groups for network-level access control, and encrypting sensitive data — plus application-level security via Spring Security/JWT for API access." }
+    ]
+  },
+  {
+    title: "Azure",
+    items: [
+      { q: "What have you used Microsoft Azure for?", a: "Cloud deployment of Spring Boot microservices — used it as one of the deployment targets alongside AWS, particularly for the NextGen Healthcare EHR platform, along with CI/CD via GitHub Actions/Jenkins." },
+      { q: "AWS vs Azure — which do you prefer and why?", a: "I'm comfortable with both. AWS I've used more for EC2/S3/RDS/IAM-based deployments; Azure I've used mainly for hosting the healthcare platform. My preference depends on what the client's existing infra is built on — I adapt to either." }
+    ]
+  },
+  {
+    title: "Docker & Kubernetes",
+    items: [
+      { q: "How have you used Docker in your projects?", a: "I containerize Spring Boot microservices with Dockerfiles, use Docker Compose for local multi-service setups (app + DB + Redis/Kafka), and push images through Jenkins/GitHub Actions CI/CD pipelines for consistent deployment across environments." },
+      { q: "How have you used Kubernetes?", a: "For orchestrating containerized microservices in the SWIFT Alliance payments project — managing scaling, service discovery, and rolling deployments to maintain 99%+ service availability, deployed via Jenkins CI/CD on AWS." },
+      { q: "What's the difference between Docker and Kubernetes?", a: "Docker packages an application and its dependencies into a container image and runs it. Kubernetes is an orchestration layer on top — it manages multiple containers across multiple machines: scaling, self-healing, load balancing, and rolling updates, which Docker alone doesn't handle." },
+      { q: "How do your microservices communicate / discover each other?", a: "Via Spring Cloud — Eureka Server for service discovery, Config Server for centralized configuration, API Gateway for routing, and OpenFeign for declarative REST client calls between services. Resilience4j handles circuit breaking and retries for fault tolerance." }
+    ]
+  },
+  {
+    title: "Messaging & Data",
+    items: [
+      { q: "Why did you use Kafka vs RabbitMQ in different projects?", a: "Kafka for high-throughput event streaming — e.g. transaction/payment events at 15K–25K events/day where ordering and replay matter. RabbitMQ for more traditional task/message queuing between services where simpler point-to-point or pub-sub messaging was enough." },
+      { q: "How did Redis caching help your applications?", a: "Caching frequently accessed data like account/customer details, which reduced repetitive database calls by around 25% and improved response times for high-traffic endpoints." },
+      { q: "Which databases have you worked with and why different ones per project?", a: "PostgreSQL, MySQL, and Oracle for relational/transactional data (accounts, payments, reconciliation), and MongoDB for more document-oriented data like healthcare records. Choice depended on the project's existing infra and data shape — structured transactional data went relational, flexible/nested clinical data went MongoDB." }
+    ]
+  },
+  {
+    title: "Security",
+    items: [
+      { q: "How did you implement authentication and authorization?", a: "Spring Security with JWT for stateless authentication, OAuth 2.0 where needed for third-party/delegated access, and Role-Based Access Control (RBAC) to restrict endpoints by user role — applied across 4–5 roles depending on the project (customer, admin, provider, etc.), with BCrypt for password hashing." },
+      { q: "How do you keep REST APIs secure in general?", a: "JWT-based stateless auth, RBAC on endpoints, input validation, HTTPS, rate limiting/circuit breaking via Resilience4j, and not exposing sensitive data in responses or logs." }
+    ]
+  },
+  {
+    title: "Behavioral / Closing",
+    items: [
+      { q: "What are your strengths?", a: "[Fill in 2–3 real strengths — e.g. strong grasp of microservices architecture, quick at debugging production issues, good at cross-functional collaboration in Agile teams.]" },
+      { q: "What are your weaknesses?", a: "I tend to spend a bit more time than needed polishing a solution before moving on, especially on backend logic — I like getting it right the first time. I've been working on this by setting clearer time-boxes for tasks and leaning more on code reviews to catch issues early instead of trying to perfect everything solo." },
+      { q: "Do you have any questions for us?", a: "What does the team structure and tech stack look like for this role? What would success look like in the first 3–6 months? What's the next step in the interview process?" }
+    ]
+  }
+];
+
+const sectionsEl = document.getElementById('sections');
+const navEl = document.getElementById('navcol');
+
+function render(){
+  sectionsEl.innerHTML = '';
+  navEl.innerHTML = '';
+  data.forEach((cat, ci) => {
+    const navLink = document.createElement('a');
+    navLink.href = `#cat-${ci}`;
+    navLink.innerText = cat.title;
+    navEl.appendChild(navLink);
+
+    const catDiv = document.createElement('div');
+    catDiv.className = 'cat';
+    catDiv.id = `cat-${ci}`;
+    catDiv.dataset.cat = ci;
+
+    const title = document.createElement('div');
+    title.className = 'cat-title';
+    title.innerHTML = `<span contenteditable="true" oninput="renameCat(${ci}, this.innerText)">${cat.title}</span><span class="count">${cat.items.length} questions</span>`;
+    catDiv.appendChild(title);
+
+    cat.items.forEach((item, qi) => {
+      const qa = document.createElement('div');
+      qa.className = 'qa';
+      qa.dataset.q = qi;
+      qa.innerHTML = `
+        <div class="rowbtns">
+          <button onclick="deleteQ(${ci}, ${qi})">Delete</button>
+        </div>
+        <div class="q" contenteditable="true" oninput="editQ(${ci}, ${qi}, this.innerText)">${item.q}</div>
+        <div class="a" contenteditable="true" oninput="editA(${ci}, ${qi}, this.innerText)">${item.a}</div>
+      `;
+      catDiv.appendChild(qa);
+    });
+
+    const addBtn = document.createElement('button');
+    addBtn.className = 'addq';
+    addBtn.innerText = '+ Add question to this section';
+    addBtn.onclick = () => addQuestion(ci);
+    catDiv.appendChild(addBtn);
+
+    sectionsEl.appendChild(catDiv);
+  });
+}
+
+function renameCat(ci, val){ data[ci].title = val; }
+function editQ(ci, qi, val){ data[ci].items[qi].q = val; }
+function editA(ci, qi, val){ data[ci].items[qi].a = val; }
+
+function deleteQ(ci, qi){
+  data[ci].items.splice(qi,1);
+  render();
+}
+
+function addQuestion(ci){
+  data[ci].items.push({q:"New question — click to edit", a:"Type your answer here..."});
+  render();
+}
+
+function addCategory(){
+  const name = prompt("Section name (e.g. 'Kubernetes deep-dive', 'System design'):", "New Section");
+  if(name === null) return;
+  data.push({title: name || "New Section", items: [{q:"New question — click to edit", a:"Type your answer here..."}]});
+  render();
+}
+
+function filterQA(){
+  const term = document.getElementById('searchInput').value.trim().toLowerCase();
+  document.querySelectorAll('.cat').forEach(catDiv => {
+    let anyVisible = false;
+    catDiv.querySelectorAll('.qa').forEach(qa => {
+      const text = qa.innerText.toLowerCase();
+      const match = term === '' || text.includes(term);
+      qa.classList.toggle('hidden', !match);
+      if(match) anyVisible = true;
+    });
+    catDiv.classList.toggle('hidden', !anyVisible && term !== '');
+  });
+}
+
+render();
+</script>
+</body>
+</html>
